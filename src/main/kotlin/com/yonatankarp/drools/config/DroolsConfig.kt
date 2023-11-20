@@ -6,7 +6,6 @@ import org.kie.internal.io.ResourceFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-
 @Configuration
 class DroolsConfig {
     companion object {
@@ -16,15 +15,17 @@ class DroolsConfig {
 
     @Bean
     fun kieContainer(): KieContainer {
-        val kieFileSystem = kieServices.newKieFileSystem()
-            .apply {
-                write(ResourceFactory.newClassPathResource(RULES_CUSTOMER_RULES_DRL))
-            }
+        val kieFileSystem =
+            kieServices.newKieFileSystem()
+                .apply {
+                    write(ResourceFactory.newClassPathResource(RULES_CUSTOMER_RULES_DRL))
+                }
 
-        val kb = kieServices.newKieBuilder(kieFileSystem)
-            .apply {
-                buildAll()
-            }
+        val kb =
+            kieServices.newKieBuilder(kieFileSystem)
+                .apply {
+                    buildAll()
+                }
 
         return kieServices.newKieContainer(kb.kieModule.releaseId)
     }

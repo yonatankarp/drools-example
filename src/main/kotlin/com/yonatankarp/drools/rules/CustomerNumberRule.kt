@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
-class CustomerNumberRule: Rule {
+class CustomerNumberRule : Rule {
     override suspend fun invoke(request: RiskRequest) {
         logger.info("Customer number in request is: ${request.customerNumber}")
     }

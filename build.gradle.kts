@@ -1,8 +1,10 @@
 plugins {
     id("org.springframework.boot") version "3.1.5"
     id("io.spring.dependency-management") version "1.1.3"
-    kotlin("jvm") version "1.9.20"
-    kotlin("plugin.spring") version "1.9.20"
+    id("com.diffplug.spotless") version "6.22.0"
+    val kotlinVersion = "1.9.20"
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
 }
 
 java {
@@ -43,5 +45,40 @@ tasks {
 
     test {
         useJUnitPlatform()
+    }
+}
+
+spotless {
+    kotlin {
+        target(
+            fileTree(projectDir) {
+                include("**/*.kt")
+                exclude("**/.gradle/**")
+            }
+        )
+        // see https://github.com/shyiko/ktlint#standard-rules
+        ktlint()
+    }
+
+    kotlinGradle {
+        target(
+            fileTree(projectDir) {
+                include("**/*.kt")
+                exclude("**/.gradle/**")
+            }
+        )
+        // see https://github.com/shyiko/ktlint#standard-rules
+        ktlint()
+    }
+}
+
+val tasksDependencies = mapOf(
+    "spotlessKotlinGradle" to listOf("spotlessKotlin"),
+    "spotlessKotlin" to listOf("compileKotlin", "processResources", "compileTestKotlin")
+)
+
+tasksDependencies.forEach { (task, dependencies) ->
+    dependencies.forEach { dependsOn ->
+        tasks.findByName(task)!!.mustRunAfter(dependsOn)
     }
 }

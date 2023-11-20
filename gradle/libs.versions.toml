@@ -1,0 +1,67 @@
+[versions]
+
+coroutines = "1.7.3"
+jvmTarget = "17"
+kotlin = "1.9.20"
+mockk = "1.13.8"
+mockkSpring = "4.0.2"
+spotless = "6.22.0"
+springDependencyManagement = "1.1.4"
+springboot = "3.1.5"
+droolsVersion = "9.44.0.Final"
+
+[libraries]
+
+# Spring Boot
+springboot_webflux_starter = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+
+# Kotlin & Coroutines
+kotlin_core = { module = "org.jetbrains.kotlin:kotlin-stdlib" }
+kotlin_jackson_module = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
+kotlin_reflection = { module = "org.jetbrains.kotlin:kotlin-reflect" }
+kotlinx_coroutines_core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx_coroutines_reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "coroutines" }
+
+# Drools
+drools_compiler = { module = "org.drools:drools-compiler", version.ref = "droolsVersion"}
+drools_core = { module = "org.drools:drools-core", version.ref = "droolsVersion"}
+drools_decisiontables = { module = "org.drools:drools-decisiontables", version.ref = "droolsVersion"}
+drools_mvel = { module = "org.drools:drools-mvel", version.ref = "droolsVersion"}
+
+# Testing
+kotlinx_coroutines_test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+mockk_core = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk_spring = { module = "com.ninja-squad:springmockk", version.ref = "mockkSpring" }
+springboot_test_starter = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+[plugins]
+
+kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin_spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+springboot = { id = "org.springframework.boot", version.ref = "springboot" }
+springboot_dependency_management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
+
+[bundles]
+
+kotlin_all = [
+    "kotlin_core",
+    "kotlin_jackson_module",
+    "kotlin_reflection",
+    "kotlinx_coroutines_core",
+    "kotlinx_coroutines_reactor",
+]
+
+drools_all = [
+    "drools_compiler",
+    "drools_core",
+    "drools_decisiontables",
+    "drools_mvel",
+]
+
+test_all = [
+    "kotlinx_coroutines_test",
+    "mockk_core",
+    "mockk_spring",
+    "springboot_test_starter",
+]

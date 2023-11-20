@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class RulesConfig {
-    @Bean(name = ["rules-by-name"])
+    @Bean(name = ["rulesByName"])
     fun rulesMap(rules: List<Rule>): Map<String, Rule> =
-        rules.associateBy { it::class.simpleName?.lowercase() ?: "" }
+        rules.associateBy { it::class.simpleName.lowercaseOrEmpty() }
+
+    private fun String?.lowercaseOrEmpty() = this?.lowercase() ?: ""
 }

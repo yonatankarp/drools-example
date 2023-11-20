@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class DroolsConfig {
-    private val RULES_CUSTOMER_RULES_DRL = "rules/risk-rules.drl"
-    private val kieServices = KieServices.Factory.get()
+    companion object {
+        private const val RULES_CUSTOMER_RULES_DRL = "rules/risk-rules.drl"
+        private val kieServices = KieServices.Factory.get()
+    }
 
     @Bean
     fun kieContainer(): KieContainer {

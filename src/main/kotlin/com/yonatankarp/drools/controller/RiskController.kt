@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class RiskController(private val riskService: RiskService) {
     @PostMapping("/risk")
-    fun getDiscount(@RequestBody riskRequest: RiskRequest) =
-        riskService.getDiscount(riskRequest)
+    suspend fun runRules(@RequestBody riskRequest: RiskRequest): ResponseEntity<RiskResponse> =
+        riskService.runRules(riskRequest)
             .let { ResponseEntity.ok(it.toResponse()) }
 
-    private fun Boolean.toResponse() = RiskResponse(isRuleApplied = this)
+    private suspend fun Boolean.toResponse() = RiskResponse(isRuleApplied = this)
 }

@@ -9,26 +9,33 @@ import org.springframework.stereotype.Service
 @Service
 class RiskService(
     private val kieContainer: KieContainer,
-    @Qualifier("rules-by-name") private val rules: Map<String, Rule>
+    @Qualifier("rulesByName") private val rules: Map<String, Rule>
 ) {
-    fun getDiscount(riskRequest: RiskRequest): Boolean {
-        val ruleNames = mutableListOf<String>()
-        kieContainer.newKieSession()
-            .apply {
-                setGlobal("ruleNames", ruleNames)
-                insert(riskRequest)
-                fireAllRules()
-                dispose()
+    suspend fun runRules(riskRequest: RiskRequest): Boolean {
+        val ruleNames = getRulesNames(riskRequest)
+        return ruleNames
+            .takeIf { it.isNotEmpty() }
+            ?.let { executeRules(riskRequest, ruleNames) }
+            ?.let { true }
+            ?: false
+    }
+
+    private suspend fun getRulesNames(riskRequest: RiskRequest): List<String> =
+        mutableListOf<String>()
+            .also {
+                kieContainer.newKieSession()
+                    .apply {
+                        setGlobal("ruleNames", it)
+                        insert(riskRequest)
+                        fireAllRules()
+                        dispose()
+                    }
             }
 
-        return if (ruleNames.isEmpty()) false
-        else {
-            ruleNames.forEach {
-                rules[it.lowercase()]?.let {
-                    it(request = riskRequest)
-                }
+    private suspend fun executeRules(riskRequest: RiskRequest, ruleNames: List<String>) =
+        ruleNames.forEach {
+            rules[it.lowercase()]?.let {
+                it(request = riskRequest)
             }
-            true
         }
-    }
 }

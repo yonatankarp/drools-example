@@ -23,7 +23,7 @@ class RiskService(
 
         return if(ruleNames.isEmpty()) false
         else {
-            ruleNames.forEach { rules[it]?.invoke(request = riskRequest) }
+            ruleNames.forEach { rules[it.lowercase()]?.invoke(request = riskRequest) }
             return true
         }
     }

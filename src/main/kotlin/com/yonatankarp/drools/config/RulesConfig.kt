@@ -8,8 +8,5 @@ import org.springframework.context.annotation.Configuration
 class RulesConfig {
     @Bean(name = ["rules-by-name"])
     fun rulesMap(rules: List<Rule>): Map<String, Rule> =
-        rules.associateBy { it::class.simpleName.toUpperCamelCase() }
-
-    private fun String?.toUpperCamelCase() =
-        this?.replaceFirstChar { it.uppercase() } ?: ""
+        rules.associateBy { it::class.simpleName?.lowercase() ?: "" }
 }

@@ -11,7 +11,7 @@ class RiskService(
     private val kieContainer: KieContainer,
     @Qualifier("rules-by-name") private val rules: Map<String, Rule>
 ) {
-    fun getDiscount(riskRequest: RiskRequest) : Boolean {
+    fun getDiscount(riskRequest: RiskRequest): Boolean {
         val ruleNames = mutableListOf<String>()
         kieContainer.newKieSession()
             .apply {
@@ -21,10 +21,14 @@ class RiskService(
                 dispose()
             }
 
-        return if(ruleNames.isEmpty()) false
+        return if (ruleNames.isEmpty()) false
         else {
-            ruleNames.forEach { rules[it.lowercase()]?.invoke(request = riskRequest) }
-            return true
+            ruleNames.forEach {
+                rules[it.lowercase()]?.let {
+                    it(request = riskRequest)
+                }
+            }
+            true
         }
     }
 }

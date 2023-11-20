@@ -1,10 +1,10 @@
 global java.util.ArrayList ruleNames;
 
-import com.example.drools.model.RiskRequest;
-import com.example.drools.rules.Rule
-import com.example.drools.rules.CountryCodeRule
-import com.example.drools.rules.EmailRule
-import com.example.drools.rules.CustomerNumberRule
+import com.yonatankarp.drools.model.RiskRequest;
+import com.yonatankarp.drools.rules.Rule
+import com.yonatankarp.drools.rules.CountryCodeRule
+import com.yonatankarp.drools.rules.EmailRule
+import com.yonatankarp.drools.rules.CustomerNumberRule
 
 
 dialect "mvel"

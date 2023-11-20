@@ -1,4 +1,4 @@
-package com.example.drools.model
+package com.yonatankarp.drools.model
 
 data class RiskRequest(
     val countryCode: String,

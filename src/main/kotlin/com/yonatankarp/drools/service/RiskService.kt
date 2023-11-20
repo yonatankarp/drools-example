@@ -1,7 +1,7 @@
-package com.example.drools.service
+package com.yonatankarp.drools.service
 
-import com.example.drools.model.RiskRequest
-import com.example.drools.rules.Rule
+import com.yonatankarp.drools.model.RiskRequest
+import com.yonatankarp.drools.rules.Rule
 import org.kie.api.runtime.KieContainer
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service

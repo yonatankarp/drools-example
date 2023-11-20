@@ -1,6 +1,6 @@
-package com.example.drools.config
+package com.yonatankarp.drools.config
 
-import com.example.drools.rules.Rule
+import com.yonatankarp.drools.rules.Rule
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

@@ -1,6 +1,6 @@
-package com.example.drools.rules
+package com.yonatankarp.drools.rules
 
-import com.example.drools.model.RiskRequest
+import com.yonatankarp.drools.model.RiskRequest
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 

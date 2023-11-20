@@ -1,4 +1,4 @@
-package com.example.drools
+package com.yonatankarp.drools
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

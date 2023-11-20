@@ -1,37 +1,28 @@
-import com.example.drools.model.OrderRequest;
-import com.example.drools.model.CustomerType;
-global com.example.drools.model.OrderDiscount orderDiscount;
+global java.util.ArrayList ruleNames;
+
+import com.example.drools.model.RiskRequest;
+import com.example.drools.rules.Rule
+import com.example.drools.rules.CountryCodeRule
+import com.example.drools.rules.EmailRule
+import com.example.drools.rules.CustomerNumberRule
+
 
 dialect "mvel"
 
-rule "Age based discount"
+rule "Germany Rules"
     when
-        OrderRequest(age < 20 || age > 50)
+        RiskRequest(countryCode == "DE")
     then
-        System.out.println("==========Adding 10% discount for Kids/ senior customer=============");
-        orderDiscount.setDiscount(orderDiscount.getDiscount() + 10);
-end
+        ruleNames.add("CountryCodeRule");
+        ruleNames.add("EmailRule");
+        insert(ruleNames)
+    end
 
-rule "Customer type based discount - Loyal customer"
+rule "Israel Rules"
     when
-        OrderRequest(customerType.getValue == "Loyal")
+        RiskRequest(countryCode == "IL")
     then
-        System.out.println("==========Adding 5% discount for LOYAL customer=============");
-        orderDiscount.setDiscount(orderDiscount.getDiscount() + 5);
-end
-
-rule "Customer type based discount - others"
-    when
-        OrderRequest(customerType.getValue != "Loyal")
-    then
-        System.out.println("==========Adding 3% discount for NEW or DISSATISFIED customer=============");
-        orderDiscount.setDiscount(orderDiscount.getDiscount() + 3);
-end
-
-rule "Amount based discount"
-    when
-        OrderRequest(amount > 1000L)
-    then
-        System.out.println("==========Adding 5% discount for amount more than 1000$=============");
-        orderDiscount.setDiscount(orderDiscount.getDiscount() + 5);
-end
+        ruleNames.add("CountryCodeRule");
+        ruleNames.add("CustomerNumberRule");
+        insert(ruleNames)
+    end

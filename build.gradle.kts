@@ -1,14 +1,9 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("org.springframework.boot") version "3.1.5"
     id("io.spring.dependency-management") version "1.1.3"
-    kotlin("jvm") version "1.8.22"
-    kotlin("plugin.spring") version "1.8.22"
+    kotlin("jvm") version "1.9.20"
+    kotlin("plugin.spring") version "1.9.20"
 }
-
-group = "com.example"
-version = "0.0.1-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -23,25 +18,24 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    implementation("org.drools:drools-core:9.44.0.Final")
-    implementation("org.drools:drools-compiler:9.44.0.Final")
-    implementation("org.drools:drools-decisiontables:9.44.0.Final")
-    implementation("org.drools:drools-mvel:9.44.0.Final")
+    val droolsVersion = "9.44.0.Final"
+    implementation("org.drools:drools-core:$droolsVersion")
+    implementation("org.drools:drools-compiler:$droolsVersion")
+    implementation("org.drools:drools-decisiontables:$droolsVersion")
+    implementation("org.drools:drools-mvel:$droolsVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "17"
+tasks {
+    compileKotlin {
+        kotlinOptions {
+            freeCompilerArgs += "-Xjsr305=strict"
+            jvmTarget = "17"
+        }
     }
-}
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-tasks.bootBuildImage {
-    builder.set("paketobuildpacks/builder-jammy-base:latest")
+    test {
+        useJUnitPlatform()
+    }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class RiskService(
     private val kieContainer: KieContainer,
-    @Qualifier("rulesByName") private val rules: Map<String, Rule>
+    @Qualifier("rulesByName") private val rules: Map<String, Rule>,
 ) {
     suspend fun runRules(riskRequest: RiskRequest): Boolean {
         val ruleNames = getRulesNames(riskRequest)
@@ -32,10 +32,12 @@ class RiskService(
                     }
             }
 
-    private suspend fun executeRules(riskRequest: RiskRequest, ruleNames: List<String>) =
-        ruleNames.forEach {
-            rules[it.lowercase()]?.let {
-                it(request = riskRequest)
-            }
+    private suspend fun executeRules(
+        riskRequest: RiskRequest,
+        ruleNames: List<String>,
+    ) = ruleNames.forEach {
+        rules[it.lowercase()]?.let {
+            it(request = riskRequest)
         }
+    }
 }

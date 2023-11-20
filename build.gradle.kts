@@ -1,14 +1,9 @@
 plugins {
-    id("org.springframework.boot") version "3.1.5"
-    id("io.spring.dependency-management") version "1.1.3"
-    id("com.diffplug.spotless") version "6.22.0"
-    val kotlinVersion = "1.9.20"
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.spring") version kotlinVersion
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    alias(libs.plugins.springboot)
+    alias(libs.plugins.springboot.dependency.management)
+    alias(libs.plugins.spotless)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.spring)
 }
 
 repositories {
@@ -16,30 +11,18 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation(libs.springboot.webflux.starter)
 
-    val coroutinesVersion = "1.7.3"
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutinesVersion")
+    implementation(libs.bundles.kotlin.all)
+    implementation(libs.bundles.drools.all)
 
-
-    val droolsVersion = "9.44.0.Final"
-    implementation("org.drools:drools-core:$droolsVersion")
-    implementation("org.drools:drools-compiler:$droolsVersion")
-    implementation("org.drools:drools-decisiontables:$droolsVersion")
-    implementation("org.drools:drools-mvel:$droolsVersion")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation(libs.bundles.test.all)
 }
 
 tasks {
     compileKotlin {
         kotlinOptions {
-            freeCompilerArgs += "-Xjsr305=strict"
-            jvmTarget = "17"
+            jvmTarget = libs.versions.jvmTarget.get()
         }
     }
 
@@ -74,7 +57,8 @@ spotless {
 
 val tasksDependencies = mapOf(
     "spotlessKotlinGradle" to listOf("spotlessKotlin"),
-    "spotlessKotlin" to listOf("compileKotlin", "processResources", "compileTestKotlin")
+    "spotlessKotlin" to listOf("compileKotlin", "processResources", "compileTestKotlin"),
+    "test" to listOf("spotlessKotlinGradle")
 )
 
 tasksDependencies.forEach { (task, dependencies) ->

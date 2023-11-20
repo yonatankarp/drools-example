@@ -1,0 +1,10 @@
+### Call the example endpoint
+
+POST http://localhost:8080/risk
+Content-Type: application/json
+
+{
+    "countryCode": "DE",
+    "customerNumber": "{{ $random.uuid }}",
+    "email": "{{ $random.email }}"
+}

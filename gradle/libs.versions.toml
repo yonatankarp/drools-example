@@ -3,7 +3,7 @@
 coroutines = "1.7.3"
 jvmTarget = "17"
 kotlin = "1.9.22"
-mockk = "1.13.8"
+mockk = "1.13.9"
 mockkSpring = "4.0.2"
 spotless = "6.23.3"
 springDependencyManagement = "1.1.4"

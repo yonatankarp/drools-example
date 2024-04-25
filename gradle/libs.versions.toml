@@ -1,7 +1,7 @@
 [versions]
 
 coroutines = "1.8.0"
-jvmTarget = "17"
+jvmTarget = "21"
 kotlin = "1.9.23"
 mockk = "1.13.10"
 mockkSpring = "4.0.2"
